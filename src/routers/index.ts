@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import { userRoutes } from "./user-routes";
 
 const routers = Router();
 
@@ -15,6 +16,9 @@ function notFound(request: Request, response: Response): Response {
 }
 
 routers.get("/", getRoot);
+
+routers.use("/api", userRoutes);
+
 routers.use(notFound);
 
 export { routers };
