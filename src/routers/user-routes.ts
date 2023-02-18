@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { UserController } from "../controllers/user-controller";
 import { UserService } from "../services/user-service";
 import { UserRepository } from "../repositories/implementations/user-repository";
+import { ensureAuthentication } from "../middlewares/auth-middleware";
 
 const router = Router();
 
@@ -30,8 +31,8 @@ async function updateUserPassword(
   return userController.updateUserPassword(request, response);
 }
 
-router.get("/users/:id", getUser);
-router.put("/users/:id", updateUser);
-router.patch("/users/:id", updateUserPassword);
+router.get("/users/:id", ensureAuthentication, getUser);
+router.put("/users/:id", ensureAuthentication, updateUser);
+router.patch("/users/:id", ensureAuthentication, updateUserPassword);
 
 export { router as userRoutes };
