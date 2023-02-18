@@ -4,7 +4,8 @@
   "description": "odm-backend",
   "main": "index.js",
   "scripts": {
-    "dev": "npx serverless offline"
+    "dev": "npx serverless offline",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -18,13 +19,24 @@
   },
   "homepage": "https://github.com/obra-da-mae/odm-backend#readme",
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "@types/aws-lambda": "^8.10.110",
     "@types/express": "^4.17.17",
     "@types/node": "^18.14.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "eslint": "^8.34.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
+    "jest": "^29.4.3",
     "prisma": "^4.10.1",
     "serverless": "^3.27.0",
     "serverless-offline": "^12.0.4",
     "serverless-plugin-typescript": "^2.1.4",
+    "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.5"
