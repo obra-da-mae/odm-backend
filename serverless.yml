@@ -1,0 +1,17 @@
+app: serverless-demo
+service: serverless-demo
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  api:
+    handler: src/index.handler
+    events:
+      - httpApi: "*"
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript

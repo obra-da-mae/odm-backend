@@ -1,0 +1,37 @@
+{
+  "name": "odm-backend",
+  "version": "1.0.0",
+  "description": "odm-backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx serverless offline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obra-da-mae/odm-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/obra-da-mae/odm-backend/issues"
+  },
+  "homepage": "https://github.com/obra-da-mae/odm-backend#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.110",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.14.0",
+    "prisma": "^4.10.1",
+    "serverless": "^3.27.0",
+    "serverless-offline": "^12.0.4",
+    "serverless-plugin-typescript": "^2.1.4",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.10.1",
+    "express": "^4.18.2",
+    "serverless-http": "^3.1.1"
+  }
+}
