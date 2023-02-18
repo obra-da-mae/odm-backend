@@ -8,8 +8,17 @@ export class UserService {
   /**
    * Method to get user data by user id
    */
-  async getUserById(id: string): Promise<IUser | null> {
-    return this.userRepository.findById(id);
+  async getUserById(id: string): Promise<IUser> {
+    if (!id) {
+      throw new Error("User id not provided");
+    }
+
+    const user = await this.userRepository.findById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
   }
 
   /**

@@ -1,9 +1,12 @@
+import * as http from "http";
 import * as express from "express";
 import { routers } from "../routers";
 
-const server = express();
+const app = express();
 
-server.use(express.json());
-server.use(routers);
+app.use(express.json());
+app.use(routers);
+
+const server = http.createServer(app);
 
 export { server };

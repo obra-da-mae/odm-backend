@@ -9,6 +9,7 @@ module.exports = {
     ecmaVersion: "latest",
     project: "tsconfig.json",
   },
+  ignorePatterns: ["tests/**/*.ts"],
   rules: {
     "comma-dangle": "off",
     "@typescript-eslint/comma-dangle": "off",
