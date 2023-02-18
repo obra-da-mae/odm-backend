@@ -1,6 +1,7 @@
 import * as bcrypt from "bcrypt";
 import { IUserRepository } from "../repositories";
 import { IUserUpdate, IUser, IUserUpdatePassword } from "../interfaces/user";
+import { AppError } from "../utils/app-error";
 
 export class UserService {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -10,12 +11,12 @@ export class UserService {
    */
   async getUserById(id: string): Promise<IUser> {
     if (!id) {
-      throw new Error("User id not provided");
+      throw new AppError("User id not provided");
     }
 
     const user = await this.userRepository.findById(id);
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     return user;
@@ -30,16 +31,16 @@ export class UserService {
     paymentMethod,
   }: IUserUpdate): Promise<IUser | null> {
     if (!id) {
-      throw new Error("User id not provided");
+      throw new AppError("User id not provided");
     }
 
     if (!name && !paymentMethod) {
-      throw new Error("Provide at least one data to update");
+      throw new AppError("Provide at least one data to update");
     }
 
     const user = await this.userRepository.findById(id);
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     const result = await this.userRepository.update({
@@ -59,12 +60,12 @@ export class UserService {
     password,
   }: IUserUpdatePassword): Promise<IUser | null> {
     if (!id || !email || !password) {
-      throw new Error("Missing required parameters");
+      throw new AppError("Missing required parameters");
     }
 
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

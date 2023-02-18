@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/auth-service";
+import {
+  handleHttpErrorResponse,
+  handleHttpResponse,
+} from "../utils/response-handler";
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -13,15 +17,9 @@ export class AuthController {
         email,
         password,
       });
-      return response.send({
-        status: "success",
-        data: result,
-      });
-    } catch (error) {
-      return response.status(400).send({
-        status: "error",
-        data: error,
-      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
     }
   }
 
@@ -33,15 +31,9 @@ export class AuthController {
         email,
         password,
       });
-      return response.send({
-        status: "success",
-        ...result,
-      });
-    } catch (error) {
-      return response.status(400).send({
-        status: "error",
-        data: error,
-      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
     }
   }
 }

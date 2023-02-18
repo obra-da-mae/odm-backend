@@ -7,6 +7,7 @@ import {
   ILoginUserResponse,
   IRegisterUserProps,
 } from "../interfaces/auth";
+import { AppError } from "../utils/app-error";
 
 export class AuthService {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -17,12 +18,12 @@ export class AuthService {
     password,
   }: IRegisterUserProps): Promise<IUserSecureResponse> {
     if (!name || !email || !password) {
-      throw new Error("Missing required parameters");
+      throw new AppError("Missing required parameters");
     }
 
     const userExists = await this.userRepository.findByEmail(email);
     if (userExists) {
-      throw new Error("User with provided email already exists");
+      throw new AppError("User with provided email already exists");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -40,17 +41,17 @@ export class AuthService {
     password,
   }: ILoginUserProps): Promise<ILoginUserResponse> {
     if (!email || !password) {
-      throw new Error("Missing required parameters");
+      throw new AppError("Missing required parameters");
     }
 
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new Error("User with provided email does not exist");
+      throw new AppError("User with provided email does not exist");
     }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      throw new Error("Invalid credentials");
+      throw new AppError("Invalid credentials");
     }
 
     const payload = { id: user.id };

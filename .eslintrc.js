@@ -21,5 +21,6 @@ module.exports = {
     "@typescript-eslint/return-await": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/consistent-type-imports": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
   },
 };

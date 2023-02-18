@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/user-service";
+import {
+  handleHttpErrorResponse,
+  handleHttpResponse,
+} from "../utils/response-handler";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -9,15 +13,9 @@ export class UserController {
 
     try {
       const result = await this.userService.getUserById(id);
-      return response.send({
-        status: "success",
-        data: result,
-      });
-    } catch (error) {
-      return response.status(400).send({
-        status: "error",
-        data: error,
-      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
     }
   }
 
@@ -31,15 +29,9 @@ export class UserController {
         name,
         paymentMethod,
       });
-      return response.send({
-        status: "success",
-        data: result,
-      });
-    } catch (error) {
-      return response.status(400).send({
-        status: "error",
-        data: error,
-      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
     }
   }
 
@@ -56,15 +48,9 @@ export class UserController {
         email,
         password,
       });
-      return response.send({
-        status: "success",
-        data: result,
-      });
-    } catch (error) {
-      return response.status(400).send({
-        status: "error",
-        data: error,
-      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
     }
   }
 }
