@@ -1,25 +1,37 @@
 import { Request, Response, Router } from "express";
 import { UserController } from "../controllers/user-controller";
+import { UserService } from "../services/user-service";
+import { UserRepository } from "../repositories/implementations/user-repository";
 
 const router = Router();
 
-const userController = new UserController();
+const userRepository = new UserRepository();
+const userService = new UserService(userRepository);
+const userController = new UserController(userService);
 
-async function getUsers(
+async function getUser(
   request: Request,
   response: Response
 ): Promise<Response> {
-  return userController.getUsers(request, response);
+  return userController.getUser(request, response);
 }
 
-async function createUser(
+async function updateUser(
   request: Request,
   response: Response
 ): Promise<Response> {
-  return userController.createUser(request, response);
+  return userController.updateUser(request, response);
 }
 
-router.get("/users", getUsers);
-router.post("/users", createUser);
+async function updateUserPassword(
+  request: Request,
+  response: Response
+): Promise<Response> {
+  return userController.updateUserPassword(request, response);
+}
+
+router.get("/users/:id", getUser);
+router.put("/users/:id", updateUser);
+router.patch("/users/:id", updateUserPassword);
 
 export { router as userRoutes };
