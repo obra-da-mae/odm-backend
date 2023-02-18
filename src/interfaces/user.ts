@@ -12,8 +12,8 @@ export interface IUserCreate {
 
 export interface IUserUpdate {
   id: string;
-  name: string;
-  paymentMethod: string;
+  name?: string;
+  paymentMethod?: string;
 }
 
 export interface IUserUpdatePassword {

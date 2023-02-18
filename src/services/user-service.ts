@@ -24,30 +24,54 @@ export class UserService {
   /**
    * Method to update user data
    */
-  async updateUser(data: IUserUpdate): Promise<IUser | null> {
-    const user = await this.userRepository.findById(data.id);
+  async updateUser({
+    id,
+    name,
+    paymentMethod,
+  }: IUserUpdate): Promise<IUser | null> {
+    if (!id) {
+      throw new Error("User id not provided");
+    }
+
+    if (!name && !paymentMethod) {
+      throw new Error("Provide at least one data to update");
+    }
+
+    const user = await this.userRepository.findById(id);
     if (!user) {
       throw new Error("User not found");
     }
 
-    const result = await this.userRepository.update(data);
+    const result = await this.userRepository.update({
+      id,
+      name,
+      paymentMethod,
+    });
     return result;
   }
 
   /**
    * Method to update user password
    */
-  async updateUserPassword(data: IUserUpdatePassword): Promise<IUser | null> {
-    const user = await this.userRepository.findByEmail(data.email);
+  async updateUserPassword({
+    id,
+    email,
+    password,
+  }: IUserUpdatePassword): Promise<IUser | null> {
+    if (!id || !email || !password) {
+      throw new Error("Missing required parameters");
+    }
+
+    const user = await this.userRepository.findByEmail(email);
     if (!user) {
       throw new Error("User not found");
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await this.userRepository.updatePassword({
-      id: data.id,
-      email: data.email,
+      id,
+      email,
       password: hashedPassword,
     });
     return result;
