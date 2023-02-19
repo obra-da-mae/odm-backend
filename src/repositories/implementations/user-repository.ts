@@ -16,7 +16,10 @@ export class UserRepository extends IUserRepository {
   }
 
   async findById(id: string): Promise<IUser | null> {
-    return this.prisma.user.findFirst({ where: { id } });
+    return this.prisma.user.findFirst({
+      where: { id },
+      include: { address: true },
+    });
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
@@ -30,7 +33,10 @@ export class UserRepository extends IUserRepository {
   async update(data: IUserUpdate): Promise<IUser | null> {
     return this.prisma.user.update({
       where: { id: data.id },
-      data,
+      data: {
+        name: data.name,
+        paymentMethod: data.paymentMethod,
+      },
     });
   }
 
